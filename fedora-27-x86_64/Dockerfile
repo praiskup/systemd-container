@@ -1,4 +1,4 @@
-FROM fedora:27
+FROM registry.fedoraproject.org/fedora:27
 
 ENV container=docker
 

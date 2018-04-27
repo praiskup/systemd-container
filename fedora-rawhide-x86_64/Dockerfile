@@ -1,4 +1,4 @@
-FROM fedora:28
+FROM registry.fedoraproject.org/fedora:rawhide
 
 ENV container=docker
 

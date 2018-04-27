@@ -1,4 +1,4 @@
-FROM centos:centos7
+FROM registry.centos.org/centos:centos7
 
 ENV container=docker
 
