@@ -1,0 +1,43 @@
+Run systemd services in non-privileged container
+================================================
+
+Because there's the great work done on oci-systemd-hook package, it's now
+possible to run systemd in non-privileged container.
+
+Dockerfiles in this repo would be ideally supported by fedora-kickstarts
+project - I'll try to push for this idea if time permits - though at this time
+available as a testing feature here.
+
+Available images
+----------------
+
+    praiskup/systemd:fedora-27
+    praiskup/systemd:fedora-26
+    praiskup/systemd:fedora-rawhide
+    praiskup/systemd:epel-7
+
+Typical usecase
+---------------
+
+$ docker run -d praiskup/systemd:epel-7
+d89c7b193ee1f82f77d48c39cd7d283b33efe8f7f531674fc4e14ace92f99f68
+$ docker exec -ti d89c7b193ee bash
+bash-4.4# systemctl status
+● d89c7b193ee1
+    State: running
+     Jobs: 0 queued
+   Failed: 0 units
+    Since: Fri 2018-04-27 12:30:48 UTC; 44s ago
+   CGroup: /system.slice/docker-d89c7b193ee1f82f77d48c39cd7d283b33efe8f7f531674fc4e14ace92f99f68.scope
+           ├─28 bash
+           ├─34 systemctl status
+           ├─35 more
+           ├─init.scope
+           │ └─1 /sbin/init
+           └─system.slice
+             ├─dbus.service
+             │ └─25 /usr/bin/dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+             ├─systemd-resolved.service
+             │ └─22 /usr/lib/systemd/systemd-resolved
+             └─systemd-journald.service
+               └─18 /usr/lib/systemd/systemd-journald

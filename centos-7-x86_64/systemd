@@ -1,0 +1,13 @@
+#! /bin/bash
+
+# Per https://bugzilla.redhat.com/show_bug.cgi?id=1373780, docker closes
+# /dev/console, which breaks systemd's output.  We need to have this wrapper to
+# have the nice systemd "[  OK  ]" logs in doc.
+#
+# This file needs to be named '*/systemd', and it must be set as the CMD in
+# Dockerfile, otherwise the oci-systemd-hook is is not run and one would have to
+# run tihs in privileged mode.
+
+export CONSOLE_FD
+exec {CONSOLE_FD}<> /dev/console
+exec /sbin/init
